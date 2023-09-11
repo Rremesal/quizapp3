@@ -6,7 +6,7 @@ class Question {
         this.setId;
     }
 
-    insert = (question, setId) => {
+    insertSingle = (question, setId) => {
         const conn = connect();
 
         conn.query("INSERT INTO questions (question, set_id) VALUES (?, ?)", [question, setId], (err, result) => {
@@ -25,7 +25,7 @@ class Question {
         conn.end();
     }
 
-    static insert = (questions) => {
+    static insertMultiple = (questions) => {
         const conn = connect();
         questions.map((obj) => {
             conn.query("INSERT INTO questions (question, set_id) VALUES (?, ?)", [obj.question, obj.setId], (err, result) => {
