@@ -1,4 +1,5 @@
 import React from 'react'
+import Button from './Button';
 
 const Card = ({id, title, buttons}) => {
   return (
@@ -17,7 +18,7 @@ const Card = ({id, title, buttons}) => {
                             )
                         }
                         return (
-                            <button key={i} id={id} onClick={button.onClick}>{button.text}</button>
+                            <Button key={i} id={id} onClick={button.onClick} data={title}>{button.text}</Button>
                         )
                     })
                 }
