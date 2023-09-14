@@ -15,7 +15,10 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/get/sets', async (req, res) => {
-    let files = fs.readdirSync('sets')
+    let files = [];
+    if (fs.existsSync('sets')) {
+        files.push(fs.readdirSync('sets'));
+    }
     let sets = null;
     if (files.length >= 1) {
         files.map(file => {
