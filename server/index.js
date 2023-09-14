@@ -14,6 +14,23 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get('/get/sets', async (req, res) => {
+    let files = fs.readdirSync('sets')
+    let sets = null;
+    if (files.length >= 1) {
+        files.map(file => {
+            let fileContent = fs.readFileSync(`sets/${file}`);
+            sets = JSON.parse(fileContent);
+    
+        });
+
+        return res.json(sets);
+        
+    } else {
+
+    }
+})
+
 
 app.post('/set/create',  async (req, res) => {
     const set = new Set(req.body.name);
@@ -24,7 +41,7 @@ app.post('/set/create',  async (req, res) => {
     return res.json(latestSet)
 })
 
-app.get('/get/sets', async (req, res) => {
+app.get('/get/mysets', async (req, res) => {
     const userId = req.query.userId;
     if(fs.existsSync(`./sets/${userId}.json`)) {
         const content = fs.readFileSync(`./sets/${userId}.json`);

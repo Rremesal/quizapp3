@@ -12,7 +12,7 @@ const MySet  = () => {
     
     useEffect(() => {
       const getSets =  async () => {
-        axios.get('http://localhost:5000/get/sets', {params: {userId: 1}}).then(res => { 
+        axios.get('http://localhost:5000/get/mysets', {params: {userId: 1}}).then(res => { 
           setSets(res.data)
         }).catch((err) => {
           console.log(err)
@@ -31,7 +31,7 @@ const MySet  = () => {
     const goToEdit = (e) => {
       const id = e.target.id;
 
-      navigate(`/sets/${id}`, );
+      navigate(`/sets/${id}`);
     }
 
 
