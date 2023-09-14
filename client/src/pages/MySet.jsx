@@ -1,8 +1,8 @@
-import React, { useEffect, useReducer, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {useForm} from 'react-hook-form'
 import axios from 'axios'
-import {useNavigate} from 'react-router-dom'
 import Card from '../components/Card';
+import { useNavigate } from 'react-router-dom';
 
 const MySet  = () => {
     const {register, handleSubmit, formState: {errors}} = useForm();
@@ -12,7 +12,7 @@ const MySet  = () => {
     
     useEffect(() => {
       const getSets =  async () => {
-        axios.get('http://localhost:5000/get/sets').then(res => {
+        axios.get('http://localhost:5000/get/sets', {params: {userId: 1}}).then(res => { 
           setSets(res.data)
         }).catch((err) => {
           console.log(err)
@@ -23,10 +23,17 @@ const MySet  = () => {
 
     const deleteSet = (e) => {
       const id = e.target.id
-      axios.delete('http://localhost:5000/delete/set', {params: {id:id}}).then(res => {
+      axios.delete('http://localhost:5000/delete/set', {params: {id:id, userId: 1}}).then(res => {
         setNewSet(res.data)
       })
     }
+
+    const goToEdit = (e) => {
+      const id = e.target.id;
+
+      navigate(`/sets/${id}`, );
+    }
+
 
     let cardButtons = [
       {
@@ -47,6 +54,7 @@ const MySet  = () => {
     <div className='flex-center-h'>
         <form 
         onSubmit={handleSubmit((data) => {
+          data.userId = 1;
             axios.post('http://localhost:5000/set/create', data).then(res => {
               setNewSet(res.data)
             }).catch((err) => {
@@ -62,9 +70,9 @@ const MySet  = () => {
 
         <div className='flex flex-wrap space-around margin-v'>
           {
-            sets.map((set,i) => {
+            sets && sets.map((set,i) => {
               return (
-                <Card key={i} buttons={cardButtons} id={set.id} title={set.name}/>
+                <Card key={i} buttons={cardButtons} id={set.id} title={set.setName}/>
               )
               
             })
