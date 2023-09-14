@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Card from '../components/Card';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
     const [sets, setSets] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getSets =  async () => {
-            axios.get('http://localhost:5000/get/sets', {params: {userId: 1}}).then(res => { 
+            axios.get('http://localhost:5000/get/sets').then(res => { 
                 setSets(res.data);
             }).catch((err) => {
             console.log(err)
@@ -16,12 +18,18 @@ const Home = () => {
         getSets()
     }, []);
 
+    const goToPlay = (e) => {
+        const userId = e.target.getAttribute("data");
+        const setId = e.target.id;
+        navigate(`play/${setId}/${userId}`);
+    }
+
     let cardButtons = [
         {
             text: "Play",
-            onClick: ""
+            onClick: goToPlay
         }
-    ]
+    ];
 
   return (
     <div>
@@ -29,7 +37,7 @@ const Home = () => {
         {
            sets && sets.map((set, i) => {
             return (
-                <Card key={i} buttons={cardButtons} id={set.id} title={set.setName}/>
+                <Card key={i} buttons={cardButtons} title={set.setName} id={set.id} data={set.userId}/>
             )
            }) 
         }
