@@ -1,8 +1,8 @@
 import express from 'express'
 import cors from 'cors'
 import Set from '../server/models/set.js'
+import Result from '../server/models/result.js'
 import multer from 'multer'
-import csv from 'csv-parser'
 import fs from 'fs'
 import Csv from './models/Csv.js'
 
@@ -50,7 +50,7 @@ app.get('/get/mysets', async (req, res) => {
         const content = fs.readFileSync(`./sets/${userId}.json`);
         res.json(JSON.parse(content))
     }
-})
+});
 
 app.delete("/delete/set", async (req, res) => {
     const content = fs.readFileSync(`sets/${req.query.userId}.json`);
@@ -59,7 +59,7 @@ app.delete("/delete/set", async (req, res) => {
     fs.writeFileSync(`sets/${req.query.userId}.json`, JSON.stringify(filteredSets));
 
     return res.json(filteredSets)
-})
+});
 
 app.post('/convert/csv', upload.single('file'), async (req, res) => {
     const csvOptions = {
@@ -69,7 +69,28 @@ app.post('/convert/csv', upload.single('file'), async (req, res) => {
 
     const questions = Csv.parse(req,csvOptions, 'uploads/');;
     return res.json(questions)
-    
+});
+
+app.get('/get/questions', async (req, res) => {
+    const setId = req.query.setId;
+    const userId = req.query.userId;
+    let contents = fs.readFileSync(`sets/${userId}.json`);
+    let sets = JSON.parse(contents);
+    let currentSet = sets.filter(set => set.id == setId);
+    console.log(sets)
+    return res.json(currentSet[0].questions);
+});
+
+app.post('/generate/results', (req, res) => {
+    const right = req.body.results.right;
+    const wrong = req.body.results.wrong;
+    const userId = req.body.userId;
+
+    console.log(right)
+
+    const result = new Result(wrong, right);
+    result.insert(userId);
+    res.json('works');
 })
 
 app.listen(PORT, () => {
