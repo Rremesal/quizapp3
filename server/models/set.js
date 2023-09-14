@@ -24,9 +24,11 @@ class Set {
         } else {
             const content = fs.readFileSync(`sets/${userId}.json`);
             let jsonObj = JSON.parse(content);
-            let lastInsertId = jsonObj[jsonObj.length - 1].id;
-            lastInsertId += 1;
-            defaultObject.id = lastInsertId;
+            if(jsonObj.length > 0) {
+                let lastInsertId = jsonObj[jsonObj.length - 1].id;
+                lastInsertId += 1;
+                defaultObject.id = lastInsertId;
+            }
             jsonObj.push(defaultObject);
             fs.writeFileSync(`sets/${userId}.json`, JSON.stringify(jsonObj, null, 4));
         }
