@@ -14,10 +14,11 @@ class Set {
                     question: "",
                     answers: [],
                     rightAnswer: "",
-                }
+                },
             ],
-
+            userId: userId,
         }
+
         if(!fs.existsSync('./sets')) {
            const path = fs.mkdirSync(`./sets/`, {recursive: true});
            fs.writeFileSync(`${path}/${userId}.json`, JSON.stringify([defaultObject], null, 4));
