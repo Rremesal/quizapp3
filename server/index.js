@@ -1,8 +1,13 @@
 import express from 'express'
 import cors from 'cors'
 import Set from '../server/models/set.js'
+import multer from 'multer'
+import csv from 'csv-parser'
+import fs from 'fs'
+import Csv from './models/Csv.js'
 
 const PORT = 5000;
+const upload = multer({dest: 'uploads/'})
 
 const app = express();
 
@@ -11,36 +16,40 @@ app.use(express.json());
 
 
 app.post('/set/create',  async (req, res) => {
-    const set = new Set(req.body.name, 3) //user_id 1 is for testing purposes replace this with the currently logged in user(id)
-    const insertId = await set.insertSingle();
-    if (insertId > 0) {
-        const result = await Set.withId(insertId);
-        return res.json(result[0]);
-    }
+    const set = new Set(req.body.name);
+    set.insert(req.body.userId);
+    const content = fs.readFileSync(`./sets/${req.body.userId}.json`);
+    const sets = JSON.parse(content);
+    const latestSet = sets[sets.length - 1];
+    return res.json(latestSet)
 })
 
 app.get('/get/sets', async (req, res) => {
-    const sets = await Set.withUserId(3);
-    console.log(sets);
-    return res.json(sets)
+    const userId = req.query.userId;
+    if(fs.existsSync(`./sets/${userId}.json`)) {
+        const content = fs.readFileSync(`./sets/${userId}.json`);
+        res.json(JSON.parse(content))
+    }
 })
 
 app.delete("/delete/set", async (req, res) => {
-    const id = req.query.id
-    const selectResult = await Set.withId(id);
-    if (selectResult) {
-        const result = await Set.deleteWithId(id);
-        if (result) {
-            return res.json(selectResult[0])
-        }
+    const content = fs.readFileSync(`sets/${req.query.userId}.json`);
+    let sets = JSON.parse(content);
+    let filteredSets = sets.filter(set => parseInt(req.query.id) !== set.id);
+    fs.writeFileSync(`sets/${req.query.userId}.json`, JSON.stringify(filteredSets));
+
+    return res.json(filteredSets)
+})
+
+app.post('/convert/csv', upload.single('file'), async (req, res) => {
+    const csvOptions = {
+        headers: ["id", "question", "A", "B", "C", "rightAnswer"],
+        separator: ';',
     }
 
+    const questions = Csv.parse(req,csvOptions, 'uploads/');;
+    return res.json(questions)
     
-    console.log(result)
-    if (result && result > 0) {
-        return res.json(result)
-    }
-
 })
 
 app.listen(PORT, () => {
