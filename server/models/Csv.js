@@ -18,7 +18,6 @@ class Csv {
     }
 
     static insert = (req, dataArray) => {
-
         const content = fs.readFileSync(`./sets/${req.body.userId}.json`);
         let sets = JSON.parse(content);
         let filteredSets = sets.filter(set => set.id == req.body.setId);
@@ -44,6 +43,7 @@ class Csv {
                 question: question.question,
                 answers: Array(question.A, question.B, question.C),
                 rightAnswer: answer,
+                myAnswer: "",
             });
             
         });

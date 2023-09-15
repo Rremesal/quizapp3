@@ -14,6 +14,7 @@ class Set {
                     question: "",
                     answers: [],
                     rightAnswer: "",
+                    myAnswer: "",
                 },
             ],
             userId: userId,
@@ -35,17 +36,17 @@ class Set {
         }
     }
 
-    static withId = async (id) => {
+    // static withId = async (id) => {
         
-    }
+    // }
 
-    static withUserId = async (userId) => {
+    // static withUserId = async (userId) => {
         
-    }
+    // }
 
-    static deleteWithId = async (id) => {
+    // static deleteWithId = async (id) => {
     
-    }
+    // }
 
     all = () => {
 

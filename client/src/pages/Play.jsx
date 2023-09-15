@@ -27,6 +27,10 @@ const Play = () => {
     });
 
     const handleClick = (e) => {
+        let tempObj = currentQuestion;
+        tempObj.myAnswer = parseInt(e.target.id);
+        setCurrentQuestion(tempObj);
+        console.log(currentQuestion)
         const correctAnswerIndex = parseInt(e.target.getAttribute("data"));
         if(parseInt(e.target.id) == correctAnswerIndex) {
             const newRightArray = [...results.right, currentQuestion];
@@ -45,7 +49,7 @@ const Play = () => {
 
     const handleResult = async () => {
         axios.post('http://localhost:5000/generate/results/', {results: results, userId: 1}).then(res => {
-            	navigate(`results/${results}`)
+            	navigate(`/results/${1}`)
         }).catch(err => {
             console.log(err)
         });
