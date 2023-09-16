@@ -9,15 +9,15 @@ class Result {
     insert = (userId) => {
 
         let defaultObject = {
+            id: 0,
             wrong: [],
             right: [],
-            id: 0,
         }
 
         if(!fs.existsSync('./results')) {
            const path = fs.mkdirSync(`./results/`, {recursive: true});
-           defaultObject.right.push(this.right);
-           defaultObject.wrong.push(this.wrong);
+           defaultObject.right = this.right;
+           defaultObject.wrong.push = this.wrong;
            fs.writeFileSync(`${path}/${userId}.json`, JSON.stringify([defaultObject], null, 4));
         } else {
             const content = fs.readFileSync(`results/${userId}.json`);
@@ -27,6 +27,8 @@ class Result {
                 lastInsertId += 1;
                 defaultObject.id = lastInsertId;
             }
+            defaultObject.right = this.right;
+            defaultObject.wrong = this.wrong;
             jsonObj.push(defaultObject);
             fs.writeFileSync(`results/${userId}.json`, JSON.stringify(jsonObj, null, 4));
         }
