@@ -77,7 +77,6 @@ app.get('/get/questions', async (req, res) => {
     let contents = fs.readFileSync(`sets/${userId}.json`);
     let sets = JSON.parse(contents);
     let currentSet = sets.filter(set => set.id == setId);
-    console.log(sets)
     return res.json(currentSet[0].questions);
 });
 
@@ -86,12 +85,20 @@ app.post('/generate/results', (req, res) => {
     const wrong = req.body.results.wrong;
     const userId = req.body.userId;
 
-    console.log(right)
-
     const result = new Result(wrong, right);
     result.insert(userId);
-    res.json('works');
+    return res.json('works');
 })
+
+app.get('/result/latest', (req, res) => {
+    console.log(req)
+    const userId = req.query.userId;
+
+    let content = fs.readFileSync(`results/${userId}.json`);
+    let results = JSON.parse(content);
+    console.log(`results: ${JSON.stringify(results)}`)
+    return res.json(results[results.length - 1]);
+});
 
 app.listen(PORT, () => {
     console.log(`SERVER RUNNING ON PORT ${PORT}`);
