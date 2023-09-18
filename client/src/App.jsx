@@ -5,6 +5,8 @@ import FillSet from './pages/FillSet'
 import Home from './pages/Home'
 import Play from './pages/Play'
 import Result from './pages/Result'
+import Role from './pages/Role'
+import AllResults from './pages/AllResults'
 
 const App = () => {
   return (
@@ -15,7 +17,9 @@ const App = () => {
         <Route path='/' element={<Home/>}/>
         <Route path='/home' element={<Home/>}/>
         <Route path='/play/:setId/:userId' element={<Play/>}/>
-        <Route path='/results/:userId' element={<Result/>}/>
+        <Route path='/results/:username' element={<Result/>}/>
+        <Route path='/results/all' element={<AllResults/>}/>
+        <Route path='/auth/choose' element={<Role/>}/>
       </Routes>
     </Router>
   )
