@@ -19,9 +19,9 @@ const Home = () => {
     }, []);
 
     const goToPlay = (e) => {
-        const userId = e.target.getAttribute("data");
+        const username = localStorage.getItem("user");
         const setId = e.target.id;
-        navigate(`play/${setId}/${userId}`);
+        navigate(`play/${setId}/${username}`);
     }
 
     let cardButtons = [

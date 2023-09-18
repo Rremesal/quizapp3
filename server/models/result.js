@@ -6,21 +6,23 @@ class Result {
         this.right = right;
     }
 
-    insert = (userId) => {
+    insert = (username) => {
 
         let defaultObject = {
             id: 0,
+            madeByUser: "",
             wrong: [],
             right: [],
         }
 
         if(!fs.existsSync('./results')) {
-           const path = fs.mkdirSync(`./results/`, {recursive: true});
+           fs.mkdirSync(`./results/`, {recursive: true});
            defaultObject.right = this.right;
-           defaultObject.wrong.push = this.wrong;
-           fs.writeFileSync(`${path}/${userId}.json`, JSON.stringify([defaultObject], null, 4));
+           defaultObject.wrong = this.wrong;
+           defaultObject.madeByUser = username;
+           fs.writeFileSync(`results/results.json`, JSON.stringify([defaultObject], null, 4));
         } else {
-            const content = fs.readFileSync(`results/${userId}.json`);
+            const content = fs.readFileSync(`results/results.json`);
             let jsonObj = JSON.parse(content);
             if(jsonObj.length > 0) {
                 let lastInsertId = jsonObj[jsonObj.length - 1].id;
@@ -29,28 +31,11 @@ class Result {
             }
             defaultObject.right = this.right;
             defaultObject.wrong = this.wrong;
+            defaultObject.madeByUser = username;
             jsonObj.push(defaultObject);
-            fs.writeFileSync(`results/${userId}.json`, JSON.stringify(jsonObj, null, 4));
+            fs.writeFileSync(`results/results.json`, JSON.stringify(jsonObj, null, 4));
         }
     }
-
-    static withId = async (id) => {
-        
-    }
-
-    static withUserId = async (userId) => {
-        
-    }
-
-    static deleteWithId = async (id) => {
-    
-    }
-
-    all = () => {
-
-    }
-       
-    
 }
 
 export default Result
