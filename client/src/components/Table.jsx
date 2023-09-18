@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Table = ({goodAnswers, wrongAnswers, simpleResults ,headers}) => {
+const Table = ({id, goodAnswers, wrongAnswers, simpleResults ,headers}) => {
 
     const convertIntToChoice = (number) => {
         let convertedAnswer = "";
@@ -14,12 +14,12 @@ const Table = ({goodAnswers, wrongAnswers, simpleResults ,headers}) => {
             case 2:
                 convertedAnswer = "C";
                 break;
-            default: null;
+            default: convertedAnswer = number;
         }
         return convertedAnswer;
     }
   return (
-    <table>
+    <table id={id}>
         <thead>
             {
                 headers && headers.map((header, i) => {
@@ -38,7 +38,7 @@ const Table = ({goodAnswers, wrongAnswers, simpleResults ,headers}) => {
                     <tr className='bg-green' key={i}>
                         <td>{obj.question}</td>
                         <td><span>{myAnswer}</span></td>
-                        <td>{rightAnswer + ": " + obj.answers[obj.rightAnswer]}</td>
+                        <td>{(obj.answers.length === 1 ? obj.answers[0] : rightAnswer + ": " + obj.answers[obj.rightAnswer])}</td>
                     </tr>
                 )
             })
@@ -51,7 +51,7 @@ const Table = ({goodAnswers, wrongAnswers, simpleResults ,headers}) => {
                     <tr className='bg-red' key={i}>
                         <td>{obj.question}</td>
                         <td>{myAnswer}</td>
-                        <td>{rightAnswer + ": " + obj.answers[obj.rightAnswer]}</td>
+                        <td>{(obj.answers.length === 1 ? obj.answers[0] : rightAnswer + ": " + obj.answers[obj.rightAnswer])}</td>
                     </tr>
                 )
             })

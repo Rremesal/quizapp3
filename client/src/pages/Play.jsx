@@ -6,8 +6,9 @@ import Button from '../components/Button';
 const Play = () => {
     const [questions, setQuestions] = useState([]);
     const [currentQuestion, setCurrentQuestion] = useState({});
-    const [results, setResults] = useState({wrong: [], right: []});
+    const [results, setResults] = useState({wrong: [], right: [], open: []});
     const [index, setIndex] = useState(0);
+    const [value, setValue] = useState("");
     const navigate = useNavigate();
     const params = useParams();
 
@@ -30,7 +31,6 @@ const Play = () => {
         let tempObj = currentQuestion;
         tempObj.myAnswer = parseInt(e.target.id);
         setCurrentQuestion(tempObj);
-        console.log(currentQuestion)
         const correctAnswerIndex = parseInt(e.target.getAttribute("data"));
         if(parseInt(e.target.id) == correctAnswerIndex) {
             const newRightArray = [...results.right, currentQuestion];
@@ -47,6 +47,27 @@ const Play = () => {
         setCurrentQuestion(questions[index]);
     }
 
+    const handleTextAreaClick = (e) => {
+        let tempObj = currentQuestion;
+        tempObj.myAnswer = value;
+        setCurrentQuestion(tempObj);
+        if (value === currentQuestion.answers[currentQuestion.rightAnswer]) {
+            const newArray = [...results.right, currentQuestion];
+            setResults({...results, right: newArray});
+        } else {
+            const newArray = [...results.wrong, currentQuestion];
+            setResults({...results, wrong: newArray}); 
+        }
+        
+        let i = index;
+        i += 1;
+        setIndex(questions[index]);
+    }
+
+    const handleTAChange = (e) => {
+        setValue(e.target.value);
+    }
+
     const handleResult = async () => {
         axios.post('http://localhost:5000/generate/results/', {results: results, username: localStorage.getItem("user")}).then(res => {
             	navigate(`/results/${localStorage.getItem("user")}`)
@@ -56,6 +77,11 @@ const Play = () => {
     }
 
     let buttonStyle = {width: "40%", height: "5rem", margin: "5px"};
+    let openQuestion;
+    if (currentQuestion) {
+        openQuestion = <><textarea id={currentQuestion.rightAnswer} value={value} onChange={handleTAChange} style={{ fontSize: "20px", minWidth: "20rem", margin: "0 auto" }}></textarea><Button onClick={handleTextAreaClick}>Next</Button></>;
+    }
+
 
 
   return (
@@ -66,13 +92,13 @@ const Play = () => {
             currentQuestion && (
             <>
                 <p>{currentQuestion.question}</p>
-                <div className='answerContainer'>
+                <div className='answerContainer'>   
                 { 
-                    currentQuestion.answers && currentQuestion.answers.map((answer, i) => {
-                        return (
-                            <Button onClick={handleClick} data={currentQuestion.rightAnswer} id={i} key={i} style={ buttonStyle } className="btnAnswer">{answer}</Button>
-                        )
-                    })
+                    currentQuestion.answers && (currentQuestion.answers.length == 1 ? openQuestion : currentQuestion.answers.map((answer, i) => {
+                            return (
+                                <Button onClick={handleClick} data={currentQuestion.rightAnswer} id={i} key={i} style={ buttonStyle } className="btnAnswer">{answer}</Button>
+                            )
+                        }))
                 }
                 </div>
             </>

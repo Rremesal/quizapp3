@@ -45,7 +45,7 @@ class Csv {
             }
             setToUpdate.questions.push({
                 question: question.question,
-                answers: Array(question.A, question.B, question.C),
+                answers: ( question.B === "" || question.C === "" ? Array(question.A) : Array(question.A, question.B, question.C)),
                 rightAnswer: answer,
                 myAnswer: "",
             });
