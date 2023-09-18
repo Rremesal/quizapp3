@@ -6,19 +6,23 @@ class Csv {
         this.file = file;
     }
 
-    static parse = async (req, csvOptions, saveToPath) => {
+    static parse = (req, csvOptions, saveToPath) => {
         const results = [];
 
         fs.createReadStream(saveToPath + req.file.filename)
             .pipe(csv(csvOptions))
             .on('data', (data) => results.push(data))
             .on('end', () => {
-                this.insert(req, results)
+                this.insert(req, results);
             });
+
+        return "CSV is imported succesfully";
+
+        
     }
 
     static insert = (req, dataArray) => {
-        const content = fs.readFileSync(`./sets/${req.body.userId}.json`);
+        const content = fs.readFileSync(`./sets/sets.json`);
         let sets = JSON.parse(content);
         let filteredSets = sets.filter(set => set.id == req.body.setId);
         let setToUpdate = filteredSets[0];
@@ -59,7 +63,7 @@ class Csv {
             return set
         });
 
-        fs.writeFileSync(`./sets/${req.body.userId}.json`, JSON.stringify(updatedSets, null, 4))
+        fs.writeFileSync(`./sets/sets.json`, JSON.stringify(updatedSets, null, 4))
     }
 }
 

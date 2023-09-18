@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 const FillSet = ({}) => {
   
   const {register, handleSubmit, formState: {errors}} = useForm();
+  const [response, setResponse] = useState("");
   const params = useParams();
 
   const submit = (data) => {
@@ -14,6 +15,7 @@ const FillSet = ({}) => {
     formData.append("setId",params.id)
     formData.append("userId", 1)
     axios.post("http://localhost:5000/convert/csv", formData).then(res => {
+      setResponse(res.data)
     })
   }
 
@@ -22,6 +24,11 @@ const FillSet = ({}) => {
       <form onSubmit={handleSubmit(submit)} method='POST'>
         <input {...register("fileSelect")} type="file" accept=".csv"/>
         <button type='submit'>Upload</button>
+        <div className='flex' style={{ justifyContent: "center" }}>
+        {
+          response
+        }
+        </div>
       </form>
     </div>
     
