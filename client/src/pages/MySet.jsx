@@ -12,7 +12,7 @@ const MySet  = () => {
     
     useEffect(() => {
       const getSets =  async () => {
-        axios.get('http://localhost:5000/get/mysets', {params: {userId: 1}}).then(res => { 
+        axios.get('http://localhost:5000/get/mysets').then(res => { 
           setSets(res.data)
         }).catch((err) => {
           console.log(err)
@@ -23,8 +23,8 @@ const MySet  = () => {
 
     const deleteSet = (e) => {
       const id = e.target.id
-      axios.delete('http://localhost:5000/delete/set', {params: {id:id, userId: 1}}).then(res => {
-        setNewSet(res.data)
+      axios.delete('http://localhost:5000/delete/set', {params: {id:id}}).then(res => {
+        setSets(res.data)
       })
     }
 
@@ -54,7 +54,6 @@ const MySet  = () => {
     <div className='flex-center-h'>
         <form 
         onSubmit={handleSubmit((data) => {
-          data.userId = 1;
             axios.post('http://localhost:5000/set/create', data).then(res => {
               setNewSet(res.data)
             }).catch((err) => {
