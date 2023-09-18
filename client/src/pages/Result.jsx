@@ -38,7 +38,7 @@ const Result = () => {
             <div>Score: {(rightAnswers.length/ (rightAnswers.length + wrongAnswers.length) * 100).toFixed(0) + "%"}</div>
         }
         </div>
-        <Table source={rightAnswers} secondSource={wrongAnswers}/>
+        <Table goodAnswers={rightAnswers} wrongAnswers={wrongAnswers}/>
         
     </div>
   )
