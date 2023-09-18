@@ -10,13 +10,10 @@ const FillSet = ({}) => {
 
   const submit = (data) => {
     const formData = new FormData();
-    console.log(data)
     formData.append("file", data.fileSelect[0]);
     formData.append("setId",params.id)
     formData.append("userId", 1)
-    console.log(formData)
     axios.post("http://localhost:5000/convert/csv", formData).then(res => {
-      console.log(res)
     })
   }
 
