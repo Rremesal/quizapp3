@@ -48,8 +48,8 @@ const Play = () => {
     }
 
     const handleResult = async () => {
-        axios.post('http://localhost:5000/generate/results/', {results: results, userId: 1}).then(res => {
-            	navigate(`/results/${1}`)
+        axios.post('http://localhost:5000/generate/results/', {results: results, username: localStorage.getItem("user")}).then(res => {
+            	navigate(`/results/${localStorage.getItem("user")}`)
         }).catch(err => {
             console.log(err)
         });
