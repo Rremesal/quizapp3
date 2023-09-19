@@ -30,7 +30,6 @@ class Question {
         questions.map((obj) => {
             conn.query("INSERT INTO questions (question, set_id) VALUES (?, ?)", [obj.question, obj.setId], (err, result) => {
                 if (err) { 
-                    console.log(`SET_ID: ${obj.setId}`)
                     console.log(err);
                     return;
                 }
