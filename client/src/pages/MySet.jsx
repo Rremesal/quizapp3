@@ -4,11 +4,15 @@ import axios from 'axios'
 import Card from '../components/Card';
 import { useNavigate } from 'react-router-dom';
 
-const MySet  = () => {
+const MySet  = ({setNavbar}) => {
     const {register, handleSubmit, formState: {errors}} = useForm();
     const [sets, setSets] = useState([]);
     const [newSet, setNewSet] = useState({});
     const navigate = useNavigate();
+
+    useEffect(() => {
+      setNavbar(true)
+  });
     
     useEffect(() => {
       const getSets =  async () => {

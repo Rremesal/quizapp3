@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../components/Button';
 
-const Play = () => {
+const Play = ({setNavbar}) => {
     const [questions, setQuestions] = useState([]);
     const [currentQuestion, setCurrentQuestion] = useState({});
     const [results, setResults] = useState({wrong: [], right: [], open: []});
@@ -11,6 +11,10 @@ const Play = () => {
     const [value, setValue] = useState("");
     const navigate = useNavigate();
     const params = useParams();
+
+    useEffect(() => {
+        setNavbar(true)
+    });
 
     useEffect(() => {
         const getSets =  async () => {
