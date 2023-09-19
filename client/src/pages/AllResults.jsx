@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Table from '../components/Table';
 
-const AllResults = () => {
+const AllResults = ({setNavbar}) => {
     const [results, setResults] = useState([]);
     const [students, setStudents] = useState([]);
     const [currentResult, setCurrentResult] = useState([]);
+
+    useEffect(() => {
+        setNavbar(true)
+    });
 
     useEffect(() => {
         axios.get('http://localhost:5000/results/all').then(res => {
@@ -18,7 +22,7 @@ const AllResults = () => {
         }).catch(err => {
             console.log(err);
         })
-    })
+    });
 
     const handleChange = (e) => {
         let filteredArray = results.filter((result) => result.madeByUser === e.target.value);

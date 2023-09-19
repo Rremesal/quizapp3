@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {useForm} from 'react-hook-form';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-const FillSet = ({}) => {
+const FillSet = ({setNavbar}) => {
   
   const {register, handleSubmit, formState: {errors}} = useForm();
   const [response, setResponse] = useState("");
   const params = useParams();
+
+  useEffect(() => {
+    setNavbar(true)
+  });
 
   const submit = (data) => {
     const formData = new FormData();

@@ -3,16 +3,23 @@ import { useParams } from 'react-router-dom'
 import Table from '../components/Table';
 import axios from 'axios';
 
-const Result = () => {
+const Result = ({setNavbar}) => {
     const [rightAnswers, setRightAnswers] = useState([]);
     const [wrongAnswers, setWrongAnswers] = useState([]);
+    const [openAnswers, setOpenAnswers] = useState([]);
     const {userId} = useParams();
+
+    useEffect(() => {
+        setNavbar(true)
+    });
 
     const getResults = async () => {
         try {
             const res = await axios.get('http://localhost:5000/result/latest', {params: {userId: userId}});
+            console.log(res.data)
             setRightAnswers(res.data.right);
-            setWrongAnswers(res.data.wrong)
+            setWrongAnswers(res.data.wrong);
+            setOpenAnswers(res.data.open);
         } catch (err) {
             console.log(err)
         }
@@ -38,7 +45,7 @@ const Result = () => {
             <div>Score: {(rightAnswers.length/ (rightAnswers.length + wrongAnswers.length) * 100).toFixed(0) + "%"}</div>
         }
         </div>
-        <Table goodAnswers={rightAnswers} wrongAnswers={wrongAnswers}/>
+        <Table goodAnswers={rightAnswers} headers={headers} wrongAnswers={wrongAnswers}/>
         
     </div>
   )

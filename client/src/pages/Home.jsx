@@ -3,7 +3,7 @@ import axios from 'axios';
 import Card from '../components/Card';
 import { useNavigate } from 'react-router-dom';
 
-const Home = () => {
+const Home = ({setNavbar}) => {
     const [sets, setSets] = useState([]);
     const navigate = useNavigate();
 
@@ -17,6 +17,10 @@ const Home = () => {
         }
         getSets()
     }, []);
+
+    useEffect(() => {
+        setNavbar(true)
+    });
 
     const goToPlay = (e) => {
         const username = localStorage.getItem("user");

@@ -1,23 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Role = () => {
+const Role = ({setNavbar}) => {
   const [isStudent, setStudent] = useState(false);
   const [name, setName] = useState("");
+  const navigate = useNavigate();
 
-    const navigate = useNavigate()
+  useEffect(() => {
+    setNavbar(false)
+  })
 
-    const goToResults = () => {
-      navigate('/results/all');
-    }
+  const goToResults = () => {
+    localStorage.setItem("user", "Teacher");
+    navigate('/');
+  }
 
-    const handleLogin = () => {
-      localStorage.setItem("user", name);
-      navigate('/')
-    }
-
-
-
+  const handleLogin = () => {
+    localStorage.setItem("user", name);
+    navigate('/');
+  }
 
   return (
     <div className='flex flex-center fixed flex-col'>
