@@ -111,8 +111,12 @@ table {
   border-collapse: none;
 }
 
+tr {
+  border: 1px solid darkgrey;
+}
+
 td {
-  border: 1px solid grey;
+  
   padding: 5px 7px;
 }
 
@@ -128,4 +132,13 @@ td {
   position: fixed;
   width: 100%;
   height: 100%;
+}
+
+#allResultsTable {
+  background-color: #e6e6e6;
+  color: #668cff;
+}
+
+#allResultsTable > thead {
+  color: #2d3e71;
 }
