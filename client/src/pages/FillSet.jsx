@@ -26,6 +26,7 @@ const FillSet = ({setNavbar}) => {
   return (
     <div>
       <form onSubmit={handleSubmit(submit)} method='POST'>
+      <p>Important! Importing a new file will remove the old one</p>
         <input {...register("fileSelect")} type="file" accept=".csv"/>
         <button type='submit'>Upload</button>
         <div className='flex' style={{ justifyContent: "center" }}>
