@@ -49,8 +49,9 @@ const AllResults = ({setNavbar}) => {
 
     return (
         <div>
-            <div>
-                <select onChange={handleChange} name='student'>
+            <div id='select-container'>
+                <label htmlFor="student">Select student:</label>
+                <select id='student' onChange={handleChange} name='student'>
                     {
                         <option value=""></option>
                     }

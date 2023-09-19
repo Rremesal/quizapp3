@@ -81,6 +81,13 @@ button:hover {
   background-color: #2d3e71;
 }
 
+#select-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 5px 0;
+}
+
 .margin-v {
   margin: 3rem auto;
 }
