@@ -89,32 +89,33 @@ const Play = ({setNavbar}) => {
 
 
   return (
-    <div>
-        <div className='flex flex-center flex-col' style={{ position: "fixed", height: "100%", width: "100%" }}>
-        {currentQuestion && <div><span style={{ display: 'block' }}>{`${index} / ${questions.length}`}</span></div>}
-        {
-            currentQuestion && (
-            <>
-                <p>{currentQuestion.question}</p>
-                <div className='answerContainer'>   
-                { 
-                    currentQuestion.answers && (currentQuestion.answers.length == 1 ? openQuestion : currentQuestion.answers.map((answer, i) => {
-                            return (
-                                <Button onClick={handleClick} data={currentQuestion.rightAnswer} id={i} key={i} style={ buttonStyle } className="btnAnswer">{answer}</Button>
-                            )
-                        }))
-                }
-                </div>
-            </>
-            )
-        }
-        {
-            (currentQuestion === undefined ? <Button onClick={handleResult}>Done. See results</Button> : null)
-        }
+    <div>hello</div>
+    // <div>
+    //     <div className='flex flex-center flex-col' style={{ position: "fixed", height: "100%", width: "100%" }}>
+    //     {currentQuestion && <div><span style={{ display: 'block' }}>{`${index + 1} / ${questions.length}`}</span></div>}
+    //     {
+    //         currentQuestion && (
+    //         <>
+    //             <p>{currentQuestion.question}</p>
+    //             <div className='answerContainer'>   
+    //             { 
+    //                 currentQuestion.answers && (currentQuestion.answers.length == 1 ? openQuestion : currentQuestion.answers.map((answer, i) => {
+    //                         return (
+    //                             <Button onClick={handleClick} data={currentQuestion.rightAnswer} id={i} key={i} style={ buttonStyle } className="btnAnswer">{answer}</Button>
+    //                         )
+    //                     }))
+    //             }
+    //             </div>
+    //         </>
+    //         )
+    //     }
+    //     {
+    //         (currentQuestion === undefined ? <Button style={{ width: "20rem", height: "4rem" }} onClick={handleResult}>Done. See results</Button> : null)
+    //     }
             
-        </div>
+    //     </div>
 
-    </div>
+    // </div>
   )
 }
 

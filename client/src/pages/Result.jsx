@@ -16,7 +16,6 @@ const Result = ({setNavbar}) => {
     const getResults = async () => {
         try {
             const res = await axios.get('http://localhost:5000/result/latest', {params: {userId: userId}});
-            console.log(res.data)
             setRightAnswers(res.data.right);
             setWrongAnswers(res.data.wrong);
             setOpenAnswers(res.data.open);
@@ -45,7 +44,7 @@ const Result = ({setNavbar}) => {
             <div>Score: {(rightAnswers.length/ (rightAnswers.length + wrongAnswers.length) * 100).toFixed(0) + "%"}</div>
         }
         </div>
-        <Table goodAnswers={rightAnswers} headers={headers} wrongAnswers={wrongAnswers}/>
+        <Table id="resultTable" goodAnswers={rightAnswers} headers={headers} wrongAnswers={wrongAnswers}/>
         
     </div>
   )

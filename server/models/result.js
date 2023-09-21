@@ -6,6 +6,7 @@ class Result {
         this.right = right;
     }
 
+    // inserts the result to a file
     insert = (username) => {
 
         let defaultObject = {

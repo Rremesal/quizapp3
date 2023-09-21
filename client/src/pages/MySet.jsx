@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import axios from 'axios'
+import { useForm } from 'react-hook-form';
+import axios from 'axios';
 import Card from '../components/Card';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,13 +22,13 @@ const MySet = ({ setNavbar }) => {
         console.log(err)
       })
     }
-    getSets()
+    getSets();
   }, [newSet]);
 
   const deleteSet = (e) => {
     const id = e.target.id
     axios.delete('http://localhost:5000/delete/set', { params: { id: id } }).then(res => {
-      setSets(res.data)
+      setSets(res.data);
     })
   }
 
@@ -40,44 +40,42 @@ const MySet = ({ setNavbar }) => {
 
   const submit = (data) => {
     axios.post('http://localhost:5000/set/create', data).then(res => {
-      setNewSet(res.data)
+      setNewSet(res.data);
     }).catch((err) => {
       console.log(err)
     });
-
-
-    let cardButtons = [
-      {
-        text: "Add",
-        onClick: goToAdd
-      },
-      {
-        text: "Delete",
-        onClick: deleteSet,
-      }
-    ]
-
-    return (
-      <div className='flex-center-h'>
-        <form onSubmit={handleSubmit(submit)} method='POST'>
-          <input {...register("name", { required: "This field is required" })} type="text" placeholder='Enter set name here' />
-          <p style={{ color: "red" }}>{errors.name?.message}</p>
-          <button type='submit'>Add</button>
-        </form>
-
-        <div className='flex flex-wrap space-around margin-v'>
-          {
-            sets && sets.map((set, i) => {
-              return (
-                <Card key={i} buttons={cardButtons} id={set.id} title={set.setName} />
-              )
-
-            })
-          }
-        </div>
-      </div>
-    )
   }
-}
 
-  export default MySet
+
+  let cardButtons = [
+    {
+      text: "Add",
+      onClick: goToAdd
+    },
+    {
+      text: "Delete",
+      onClick: deleteSet,
+    }
+  ];
+
+  return (
+    <div className='flex-center-h'>
+      <form onSubmit={handleSubmit(submit)} method='POST'>
+        <input {...register("name", { required: "This field is required" })} type="text" placeholder='Enter set name here' />
+        <p style={{ color: "red" }}>{errors.name?.message}</p>
+        <button type='submit'>Add</button>
+      </form>
+
+      <div className='flex flex-wrap space-around margin-v'>
+        {
+          sets && sets.map((set, i) => {
+            return (
+              <Card key={i} buttons={cardButtons} id={set.id} title={set.setName} />
+            )
+          })
+        }
+      </div>
+    </div>
+  )
+}
+export default MySet

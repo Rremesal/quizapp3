@@ -109,7 +109,7 @@ button:hover {
   justify-content: center;
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
+  width: 60%;
 }
 
 table {
@@ -141,11 +141,15 @@ td {
   height: 100%;
 }
 
-#allResultsTable {
+table {
   background-color: #e6e6e6;
   color: #668cff;
 }
 
-#allResultsTable > thead {
+thead {
   color: #2d3e71;
+}
+
+#resultTable {
+  color: black;
 }

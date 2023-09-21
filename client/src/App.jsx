@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
 import MySet from './pages/MySet'
 import FillSet from './pages/FillSet'
 import Home from './pages/Home'
@@ -14,6 +14,7 @@ const App = () => {
   return (
     <Router>
       {navbar && <Navbar/>}
+      {(!localStorage.getItem("user") ? <Navigate to='/auth/choose'/> : null)}
       <Routes>
         <Route path='/mysets' element={<MySet setNavbar={setNavbar}/>}/>
         <Route path='/sets/:id' element={<FillSet setNavbar={setNavbar}/>}/>

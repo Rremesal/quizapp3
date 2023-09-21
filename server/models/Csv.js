@@ -6,6 +6,7 @@ class Csv {
         this.file = file;
     }
 
+    // parses the csv file
     static parse = (req, csvOptions, saveToPath) => {
         const results = [];
 
@@ -17,10 +18,9 @@ class Csv {
             });
 
         return "CSV is imported succesfully";
-
-        
     }
 
+    // inserts the csv data into a file
     static insert = (req, dataArray) => {
         const content = fs.readFileSync(`./sets/sets.json`);
         let sets = JSON.parse(content);

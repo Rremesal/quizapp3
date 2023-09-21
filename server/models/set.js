@@ -4,7 +4,7 @@ class Set {
     constructor(name) {
         this.name = name;
     }
-
+    // inserts a set into a file
     insert = () => {
         let defaultObject = {
             id: 0,

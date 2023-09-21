@@ -6,13 +6,16 @@ import multer from 'multer'
 import fs from 'fs'
 import Csv from './models/Csv.js'
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 const upload = multer({dest: 'uploads/'})
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static('client/build'));
+
+
 
 app.get('/get/sets', async (req, res) => {
     let files = [];
@@ -96,6 +99,10 @@ app.get('/result/latest', (req, res) => {
     let content = fs.readFileSync(`results/results.json`);
     let results = JSON.parse(content);
     return res.json(results[results.length - 1]);
+});
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
 });
 
 app.listen(PORT, () => {

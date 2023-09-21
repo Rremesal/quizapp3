@@ -15,18 +15,23 @@ const AllResults = ({setNavbar}) => {
         axios.get('http://localhost:5000/results/all').then(res => {
             setResults(res.data);
 
-            const students = results.map((result) => {
-                return result.madeByUser;
+            let students = [];
+            results.map((result) => {
+                students.push(result.madeByUser);
             });
-            setStudents([students[0]]);
+            students = students.filter(uniqueStudents);
+            setStudents(students);
         }).catch(err => {
             console.log(err);
         })
     });
 
+    const uniqueStudents = (value, index, array) => {
+        return array.indexOf(value) === index;
+    }
+
     const handleChange = (e) => {
         let filteredArray = results.filter((result) => result.madeByUser === e.target.value);
-        console.log(filteredArray[0].right)
         
 
         let simpleResults = [];
